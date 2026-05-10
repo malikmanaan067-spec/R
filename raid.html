@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raid Forgive Me</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:linear-gradient(135deg,#020617,#0f172a,#111827);
+}
+
+/* Background */
+
+.bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.bg span{
+    position:absolute;
+    bottom:-100px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.07);
+    animation:float 14s linear infinite;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:1;
+    }
+    100%{
+        transform:translateY(-1200px) rotate(720deg);
+        opacity:0;
+    }
+}
+
+.card{
+    position:relative;
+    z-index:2;
+    width:420px;
+    padding:35px;
+    border-radius:25px;
+    text-align:center;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.15);
+    box-shadow:0 0 40px rgba(0,0,0,0.5);
+    color:white;
+}
+
+.teddy{
+    font-size:90px;
+    animation:bounce 2s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+h1{
+    margin-top:10px;
+    color:#38bdf8;
+    font-size:40px;
+}
+
+.question{
+    margin-top:20px;
+    font-size:22px;
+    min-height:90px;
+    line-height:1.5;
+    transition:0.3s;
+}
+
+.count{
+    margin-top:10px;
+    color:#93c5fd;
+    font-size:18px;
+}
+
+.buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+button{
+    border:none;
+    padding:14px 32px;
+    border-radius:40px;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+#yes{
+    background:#22c55e;
+    color:white;
+    box-shadow:0 0 20px rgba(34,197,94,0.5);
+}
+
+#yes:hover{
+    transform:scale(1.1);
+}
+
+#no{
+    background:#ef4444;
+    color:white;
+}
+
+#no:hover{
+    transform:scale(0.95);
+}
+
+.final{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    color:white;
+    animation:zoom 1s ease;
+    text-align:center;
+}
+
+.final h1{
+    font-size:60px;
+}
+
+.final p{
+    margin-top:20px;
+    font-size:28px;
+}
+
+@keyframes zoom{
+    from{
+        transform:scale(0.5);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg"></div>
+
+<div class="card">
+
+    <div class="teddy">🧸</div>
+
+    <h1>Raid 😭</h1>
+
+    <div class="question" id="question">
+        Bhai ab toh maaf karde 😔
+    </div>
+
+    <div class="count" id="count">
+        NO pressed : 0 times 😭
+    </div>
+
+    <div class="buttons">
+        <button id="yes">YES 😎</button>
+        <button id="no">NO 🤡</button>
+    </div>
+
+</div>
+
+<script>
+
+/* Background bubbles */
+
+const bg = document.getElementById("bg");
+
+for(let i=0;i<40;i++){
+
+    let bubble = document.createElement("span");
+
+    let size = Math.random()*40 + 10;
+
+    bubble.style.width = size + "px";
+    bubble.style.height = size + "px";
+
+    bubble.style.left = Math.random()*100 + "%";
+
+    bubble.style.animationDuration = (6 + Math.random()*10) + "s";
+
+    bg.appendChild(bubble);
+}
+
+/* 60 Funny Questions */
+
+const questions = [
+
+"Bhai ab toh maaf karde 😔",
+"Pizza khilauga fir bhi no? 🍕",
+"Ek aur chance de de 😭",
+"Teddy bhi ro raha hai 🧸",
+"Friendship tod dega kya 😭",
+"Ab toh gussa cool kar 😎",
+"Treat bhi dunga bhai 🍔",
+"Game me MVP dunga 🎮",
+"Ab kya jaan lega 😭",
+"Bhai mazak tha 😔",
+"Free fire ID bhi dunga 😂",
+"Extra cheese pizza 🍕",
+"Chocolate bhi milegi 🍫",
+"System bol raha yes daba 😎",
+"Raid OP hai 🔥",
+"Main sad ho gaya 😭",
+"Ab toh smile kar 😔",
+"Bhai dil toot gaya 💔",
+"NO dabake kya milega 🤡",
+"Friendship.exe error 😭",
+"Please bhai 😔",
+"Ab toh maan ja 😭",
+"Teddy ko bura lag raha 🧸",
+"Treat unlimited 😎",
+"Cold drink bhi 🍹",
+"Burger bhi 🍔",
+"Chicken roll bhi 🌯",
+"Gaming night bhi 🎮",
+"Movie bhi 😎",
+"Ab toh maaf karde bhai 😭",
+"Raid king hai 👑",
+"Main loser hu 😭",
+"Tu jeet gaya 😎",
+"Bas yes karde 😔",
+"System overheating 😭",
+"NO button thak gaya 🤡",
+"Pizza waiting for approval 🍕",
+"Teddy sleeping 😴",
+"Bhai reply bhi nahi de raha 😭",
+"Ab toh dosti bacha le 😔",
+"Mission friendship 💙",
+"Last warning 😭",
+"Ultra last warning 😭",
+"Final last warning 😭",
+"Super final warning 😭",
+"Legendary warning 😭",
+"My respect 📉",
+"Friendship 📉",
+"Sadness 📈",
+"Pizza craving 📈",
+"Ab toh ha bol 😎",
+"System hacked 🤡",
+"NO illegal ho gaya 😭",
+"Raid too dangerous 😳",
+"Maafi pending ⏳",
+"Loading forgiveness... 😭",
+"Internet slow hai ya tu 😭",
+"Bhai pleaseeeee 😭",
+"Ab sirf YES legal hai 😎"
+
+];
+
+let index = 0;
+let noCount = 0;
+
+const question = document.getElementById("question");
+const count = document.getElementById("count");
+
+document.getElementById("no").onclick = () => {
+
+    noCount++;
+
+    index++;
+
+    if(index >= questions.length){
+        index = questions.length - 1;
+    }
+
+    question.innerHTML = questions[index];
+
+    count.innerHTML =
+    "NO pressed : " + noCount + " times 😭";
+
+    if(noCount >= 20){
+
+        document.getElementById("no").innerText =
+        "Stop Bro 😭";
+    }
+
+    if(noCount >= 40){
+
+        document.getElementById("no").style.opacity = "0.5";
+    }
+
+    if(noCount >= 55){
+
+        question.innerHTML =
+        "Congratulations 😎 You unlocked YES button ending";
+
+        document.getElementById("no").disabled = true;
+    }
+};
+
+document.getElementById("yes").onclick = () => {
+
+    document.body.innerHTML = `
+
+    <div class="final">
+
+        <div style="font-size:120px;">🧸🍕🎉</div>
+
+        <h1>RAID NE MAAF KAR DIYA 😎</h1>
+
+        <p>
+            Friendship Restored Successfully 🔥
+        </p>
+
+    </div>
+
+    `;
+};
+
+</script>
+
+</body>
+</html>
